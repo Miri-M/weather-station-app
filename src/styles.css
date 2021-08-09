@@ -1,0 +1,145 @@
+body {
+  background: black;
+  color: black;
+  text-shadow: white 1px 0 10px;
+  font-family: "Courier New", Courier, monospace;
+  background-image: url("images/Rain.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+h1 {
+  font-size: 30px;
+  text-align: center;
+  font-weight: 600;
+}
+
+h2 {
+  font-weight: 900;
+  font-size: 40px;
+  text-align: center;
+  position: relative;
+}
+
+h3 {
+  text-align: center;
+  font-weight: 900;
+}
+
+#city-input {
+  background: darkgray;
+  font-weight: 900;
+}
+
+.location-search {
+  display: inline-block;
+  position: relative;
+  margin-top: 10px;
+}
+
+.btn-dark {
+  display: inline-block;
+  color: rgb(192, 188, 188);
+  background: rgb(94, 95, 95);
+  border: 0.5px solid darkslategray;
+  border-radius: 5px;
+  padding: 2px 8px;
+  margin: 10px 0;
+}
+
+.button:hover,
+.convert-temperature-button:hover {
+  color: white;
+  border: 0.5px solid slategrey;
+}
+
+.current-temperature {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+#current-temperature,
+#current-temperature-units {
+  font-size: 35px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+#convert-temperature {
+  position: relative;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.convert-temperature-button {
+  font-size: 15px;
+  font-weight: 900;
+  color: black;
+  text-shadow: white 1px 0 10px;
+  background: rgba(255, 255, 255, 0.3);
+  border: 0.5px solid darkslategrey;
+  border-radius: 5px;
+  position: relative;
+  margin: 0 2px;
+}
+
+.fa-cloud-sun-rain,
+.fa-sun,
+.fa-cloud-rain {
+  color: black;
+  text-shadow: white 1px 0 10px;
+  display: block;
+  text-align: center;
+  position: relative;
+  font-size: 80px;
+  margin: 10px 0px;
+}
+
+.card {
+  position: fixed;
+  background: rgba(255, 255, 255, 0.4);
+  font-weight: 500;
+  border: 3px solid rgb(0, 0, 39);
+}
+
+.card-title {
+  font-weight: 900;
+  font-size: 25px;
+  color: black;
+  text-shadow: white 1px 0 10px;
+  text-align: center;
+}
+
+.card-text {
+  text-align: center;
+  color: black;
+  font-weight: 900;
+  font-size: 18px;
+}
+
+.weather-header {
+  font-weight: 900;
+  font-size: 17px;
+  color: rgb(53, 50, 50);
+  text-align: center;
+}
+
+.temp-high {
+  color: darkred;
+  font-weight: 900;
+}
+.temp-low {
+  color: darkblue;
+  font-weight: 900;
+}
+
+.northwesterly {
+  transform: rotate(-45deg);
+}
+
+.southerly {
+  transform: rotate(180deg);
+}
