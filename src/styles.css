@@ -29,9 +29,10 @@ h3 {
 
 .source-code{
 display: inline-block;
-margin: 10px;
+margin: 20px;
 position:relative;
 font-size: small;
+text-align: center;
 }
 
 #city-input {
