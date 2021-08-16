@@ -27,12 +27,13 @@ h3 {
   font-weight: 900;
 }
 
-.source-code{
+.sources{
+font-size: small;
+text-align: center;
 display: inline-block;
 margin: 20px;
 position:relative;
-font-size: small;
-text-align: center;
+
 }
 
 #city-input {
