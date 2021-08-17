@@ -112,6 +112,7 @@ h3 {
   background: rgba(255, 255, 255, 0.4);
   font-weight: 500;
   border: 3px solid rgb(0, 0, 39);
+  padding-bottom: 30px;
 }
 
 .card-title {
