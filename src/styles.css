@@ -31,7 +31,7 @@ h3 {
   display: flex;
   justify-content: space-between;
   position:absolute;
-  margin: 0 20px;
+  margin: 0 auto;
   font-size: small;
   
 }
