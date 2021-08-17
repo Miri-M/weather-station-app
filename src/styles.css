@@ -30,7 +30,9 @@ h3 {
 .sources{
   display: block;
   position:absolute;
-  margin: 0 auto;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
   font-size: small;
 }
 
