@@ -40,8 +40,8 @@ h3 {
 }
 
 .location-search {
-  display: block;
-  position: fixed;
+  display: inline-block;
+  position: relative;
   margin-top: 10px;
 }
 
