@@ -28,7 +28,7 @@ h3 {
 }
 
 .sources{
-  display: inline-block;
+  display: block;
   position:relative;
   margin: 20px;
   font-size: small;
