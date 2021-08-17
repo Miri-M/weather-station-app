@@ -28,10 +28,11 @@ h3 {
 }
 
 .sources{
-position:relative;
-margin: 20px;
-font-size: small;
-text-align: center;
+  display: inline-block;
+  position:relative;
+  margin: 20px;
+  font-size: small;
+  text-align: center;
 }
 
 #city-input {
