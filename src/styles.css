@@ -28,12 +28,10 @@ h3 {
 }
 
 .sources{
-  display: flex;
-  justify-content: space-between;
+  display: block;
   position:absolute;
   margin: 0 auto;
   font-size: small;
-  
 }
 
 #city-input {
@@ -42,8 +40,8 @@ h3 {
 }
 
 .location-search {
-  display: inline-block;
-  position: relative;
+  display: block;
+  position: fixed;
   margin-top: 10px;
 }
 
