@@ -31,7 +31,7 @@ h3 {
   display: block;
   position:absolute;
   text-align: center;
-  margin: auto;
+  margin: 0 auto;
   background: lime;
   width: 100%;
   font-size: small;
