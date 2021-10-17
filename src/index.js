@@ -1,46 +1,3 @@
-const weather = {
-  getPrompt: (cityUserInput) => {
-    if (!cityUserInput) {
-      return `You haven't entered a valid city name, please try again.`;
-    }
-
-    const cityWeather = weather.data[cityUserInput];
-    if (!cityWeather) {
-      return `Sorry, we do not have weather information for ${cityUserInput}. Try going to \nhttps://www.google.com/search?q=weather+${cityUserInput}`;
-    }
-
-    const city = cityUserInput.replace(
-      cityUserInput[0],
-      cityUserInput[0].toUpperCase()
-    );
-    const tempFarenheit = Math.round((cityWeather.temp * 9) / 5 + 32);
-    return `The current temperature in ${city} is ${cityWeather.temp}°C (${tempFarenheit}°F), with a humidity of ${cityWeather.humidity}%.`;
-  },
-  data: {
-    paris: {
-      temp: 19.7,
-      humidity: 80
-    },
-    tokyo: {
-      temp: 17.3,
-      humidity: 50
-    },
-    lisbon: {
-      temp: 30.2,
-      humidity: 20
-    },
-    "san francisco": {
-      temp: 20.9,
-      humidity: 100
-    },
-    moscow: {
-      temp: -5,
-      humidity: 20
-    }
-  }
-};
-
-//-------------------------------------
 //DATE TIME
 const weekdays = [
   "Sunday",
@@ -95,7 +52,7 @@ let currentDateTime = `${formatTime()} ${todayDay} ${todayDate} ${todayMonth} ${
 
 //--------------------------------------
 
-//CITY / LOCATION SEARCH FUNCTION & WEATHER API
+//CITY / LOCATION SEARCH FUNCTION & CURRENT WEATHER CONDITIONS
 
 let cityForm = document.querySelector("#city-search-form");
 let locationButton = document.querySelector("#location-button");
@@ -108,19 +65,25 @@ function displayTemperature(response) {
   return temperature;
 }
 
-/*function displayConditions(response) {
-  let description = response.data.weather.[0].main;
-  let mintemp = response.data.main.temp_min;
-  let maxtemp = response.data.main.temp_max;
-  let humidity = response.data.main.humidity;
-  let windSpeed = math.reound(response.data.wind.speed);
-  let windDirection = response.data.wind.deg;
-  //let cloudCover = response.data.clouds.all;
-  console.log(description);
-}*/
+function displayConditions(response) {
+  let displayConditions=document.querySelector("#current-conditions-element");
+  let currentConditions=response.data.weather[0].description;
+  displayConditions.innerHTML=currentConditions;
+  return currentConditions;
+}
 
 function citySearch(city) {
   let apiEndPoint = `https://api.openweathermap.org/data/2.5/weather?`;
+  let apiKey = "f5bcd0d00e606347fff1623724afd116";
+  let units = `metric`;
+  let apiOpenWeatherURL = `${apiEndPoint}q=${city}&appid=${apiKey}&units=${units}`;
+  axios.get(apiOpenWeatherURL).then(displayTemperature);
+  axios.get(apiOpenWeatherURL).then(displayConditions);
+}
+
+//Forecast
+function citySearchAPIForecast(city) {
+  let apiEndPoint = `https://api.openweathermap.org/data/2.5/forecast?`;
   let apiKey = "f5bcd0d00e606347fff1623724afd116";
   let units = `metric`;
   let apiOpenWeatherURL = `${apiEndPoint}q=${city}&appid=${apiKey}&units=${units}`;
@@ -140,9 +103,23 @@ function buildLocationAPI(position) {
   axios.get(apiOpenWeatherURL).then(displayTemperature);
 }
 
+//Forecast
+function buildLocationAPIForecast(position) {
+  let apiEndPoint = `https://api.openweathermap.org/data/2.5/forecast?`;
+  let units = `metric`;
+  let apiKey = "f5bcd0d00e606347fff1623724afd116";
+  let apiOpenWeatherURL = `${apiEndPoint}lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiKey}&units=${units}`;
+  axios.get(apiOpenWeatherURL).then(displayTemperature);
+}
+
 function currentCoordinates(event) {
   event.preventDefault();
   navigator.geolocation.getCurrentPosition(buildLocationAPI);
+}
+
+function currentCoordinatesForecast(event) {
+  event.preventDefault();
+  navigator.geolocation.getCurrentPosition(buildLocationAPIForecast);
 }
 
 function buildCityNameAPI(event) {
@@ -158,9 +135,11 @@ function buildCityNameAPI(event) {
 //User initiates city name search
 cityForm.addEventListener("submit", handleCitySubmit);
 cityForm.addEventListener("submit", buildCityNameAPI);
+cityForm.addEventListener("submit", citySearchAPIForecast);
 
 //User initiates current location search
 locationButton.addEventListener("click", currentCoordinates);
+locationButton.addEventListener("click", currentCoordinatesForecast);
 
 //-------------------------------------------------------------------
 
@@ -200,5 +179,28 @@ let convertCelsiusButton = document.querySelector("#convert-celsius-button");
 
 convertFarenheitButton.addEventListener("click", farenheitConversion);
 convertCelsiusButton.addEventListener("click", celsiusConversion);
+
+//-----------------------------------------------------------------------------------------------
+
+//USER FEEDBACK
+const weather = {
+  getPrompt: (cityUserInput) => {
+    if (!cityUserInput) {
+      return `You haven't entered a valid city name, please try again.`;
+    }
+
+    const cityWeather = weather.data[cityUserInput];
+    if (!cityWeather) {
+      return `Sorry, we do not have weather information for ${cityUserInput}. Try going to \nhttps://www.google.com/search?q=weather+${cityUserInput}`;
+    }
+
+    const city = cityUserInput.replace(
+      cityUserInput[0],
+      cityUserInput[0].toUpperCase()
+    );
+    const tempFarenheit = Math.round((cityWeather.temp * 9) / 5 + 32);
+    return `The current temperature in ${city} is ${cityWeather.temp}°C (${tempFarenheit}°F), with a humidity of ${cityWeather.humidity}%.`;
+  },
+};
 
 //-----------------------------------------------------------------------------------------------
