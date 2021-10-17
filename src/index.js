@@ -65,16 +65,12 @@ function displayTemperature(response) {
   return temperature;
 }
 
-/*function displayConditions(response) {
-  let description = response.data.weather.[0].main;
-  let mintemp = response.data.main.temp_min;
-  let maxtemp = response.data.main.temp_max;
-  let humidity = response.data.main.humidity;
-  let windSpeed = math.reound(response.data.wind.speed);
-  let windDirection = response.data.wind.deg;
-  //let cloudCover = response.data.clouds.all;
-  console.log(description);
-}*/
+function displayConditions(response) {
+  let displayConditions=document.querySelector("#current-conditions-element");
+  let currentConditions=response.data.weather[0].description;
+  displayConditions.innerHTML=currentConditions;
+  return currentConditions;
+}
 
 function citySearch(city) {
   let apiEndPoint = `https://api.openweathermap.org/data/2.5/weather?`;
@@ -82,6 +78,7 @@ function citySearch(city) {
   let units = `metric`;
   let apiOpenWeatherURL = `${apiEndPoint}q=${city}&appid=${apiKey}&units=${units}`;
   axios.get(apiOpenWeatherURL).then(displayTemperature);
+  axios.get(apiOpenWeatherURL).then(displayConditions);
 }
 
 //Forecast
