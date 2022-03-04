@@ -51,27 +51,41 @@ function formatTime() {
 let currentDateTime = `${formatTime()} ${todayDay} ${todayDate} ${todayMonth} ${todayYear}`;
 
 //--------------------------------------
-
 //CITY / LOCATION SEARCH FUNCTION & CURRENT WEATHER CONDITIONS
+//--------------------------------------
 
 let cityForm = document.querySelector("#city-search-form");
 let locationButton = document.querySelector("#location-button");
+let isDegreesCelsius=true;
 
+//Retrieve current temperature
 function displayTemperature(response) {
   document.querySelector("#city-heading").innerHTML = response.data.name;
-  let displayTemperature = document.querySelector("#current-temperature");
+  let displayElement = document.querySelector("#current-temperature");
   let temperature = Math.round(response.data.main.temp);
-  displayTemperature.innerHTML = `${temperature}°C`;
-  return temperature;
+  displayElement.innerHTML = temperature;
+  if (isDegreesCelsius){
+    celsiusConversion();
+  }
+  else{
+    farenheitConversion();
+  }
 }
 
+//Retrieve current conditions description
 function displayConditions(response) {
   let displayConditions=document.querySelector("#current-conditions-element");
   let currentConditions=response.data.weather[0].description;
   displayConditions.innerHTML=currentConditions;
+  let icon = document.querySelector("#current-weather-icon");
+  icon.setAttribute("src",`http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
+  icon.setAttribute("alt",currentConditions);
+  console.log(day1-weather-icon);
   return currentConditions;
 }
 
+
+//City name current conditions
 function citySearch(city) {
   let apiEndPoint = `https://api.openweathermap.org/data/2.5/weather?`;
   let apiKey = "f5bcd0d00e606347fff1623724afd116";
@@ -81,7 +95,7 @@ function citySearch(city) {
   axios.get(apiOpenWeatherURL).then(displayConditions);
 }
 
-//Forecast
+//City name forecast
 function citySearchAPIForecast(city) {
   let apiEndPoint = `https://api.openweathermap.org/data/2.5/forecast?`;
   let apiKey = "f5bcd0d00e606347fff1623724afd116";
@@ -95,15 +109,17 @@ function handleCitySubmit(event) {
   citySearch(cityInput);
 }
 
+//Location current conditions
 function buildLocationAPI(position) {
   let apiEndPoint = `https://api.openweathermap.org/data/2.5/weather?`;
   let units = `metric`;
   let apiKey = "f5bcd0d00e606347fff1623724afd116";
   let apiOpenWeatherURL = `${apiEndPoint}lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiKey}&units=${units}`;
   axios.get(apiOpenWeatherURL).then(displayTemperature);
+  axios.get(apiOpenWeatherURL).then(displayConditions);
 }
 
-//Forecast
+//Location Forecast
 function buildLocationAPIForecast(position) {
   let apiEndPoint = `https://api.openweathermap.org/data/2.5/forecast?`;
   let units = `metric`;
@@ -138,8 +154,7 @@ cityForm.addEventListener("submit", buildCityNameAPI);
 cityForm.addEventListener("submit", citySearchAPIForecast);
 
 //User initiates current location search
-locationButton.addEventListener("click", currentCoordinates);
-locationButton.addEventListener("click", currentCoordinatesForecast);
+locationButton.addEventListener("click", currentCoordinates,currentCoordinatesForecast);
 
 //-------------------------------------------------------------------
 
@@ -151,24 +166,30 @@ dateTime.innerHTML = currentDateTime;
 
 //CELSIUS & FARENHEIT
 function farenheitConversion(event) {
-  event.preventDefault();
+  if(event){
+    event.preventDefault();
+  }debugger
   var currentTemperature = document.querySelector("#current-temperature");
-  currentTemperature = Number(currentTemperature);
-  let tempFarenheit = Math.round((currentTemperature * 9) / 5 + 32);
+  temperatureElement = Number(currentTemperature.innerHTML);
+  let tempFarenheit = Math.round((temperatureElement * 9) / 5 + 32);
   currentTemperature.innerHTML = tempFarenheit;
   let temperatureUnits = document.querySelector("#current-temperature-units");
   temperatureUnits.innerHTML = "°F";
+  isDegreesCelsius = false;
   return;
 }
 
 function celsiusConversion(event) {
-  event.preventDefault();
+  if(event){
+    event.preventDefault();
+  }  debugger
   var currentTemperature = document.querySelector("#current-temperature");
-  currentTemperature = Number(currentTemperature);
-  let tempCelsius = Math.round(((currentTemperature - 32) * 5) / 9);
+  temperatureElement = Number(currentTemperature.innerHTML);
+  let tempCelsius = Math.round(((temperatureElement - 32) * 5) / 9);
   currentTemperature.innerHTML = tempCelsius;
   let temperatureUnits = document.querySelector("#current-temperature-units");
   temperatureUnits.innerHTML = "°C";
+  isDegreesCelsius = true;
   return;
 }
 

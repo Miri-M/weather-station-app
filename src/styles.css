@@ -75,7 +75,16 @@ h3 {
 #current-temperature-units {
   font-size: 35px;
   font-weight: 600;
-  display: inline-block;
+  position: relative;
+  text-align: center;
+}
+
+#current-weather-icon{
+  width: 12%;
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 0 0.75rem rgb(255, 255, 255));
 }
 
 #convert-temperature {
@@ -96,7 +105,7 @@ h3 {
   margin: 0 2px;
 }
 
-.current-conditions::first-letter{
+.current-conditions::first-letter, #current-conditions-element::first-letter{
   text-transform: uppercase;
 }
 
@@ -110,6 +119,11 @@ h3 {
   position: relative;
   font-size: 80px;
   margin: 10px 0px;
+}
+.weather-icon{
+  display: block;
+  margin: auto;
+  position: relative;
 }
 
 .card {
