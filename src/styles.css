@@ -105,6 +105,18 @@ h3 {
   margin: 0 2px;
 }
 
+.inactive-convert-temperature-button{
+  font-size: 15px;
+  font-weight: 900;
+  color: rgba(126, 122, 122, 0.63);
+  text-shadow: white 1px 0 10px;
+  background: rgba(255, 255, 255, 0.3);
+  border: 0.5px solid rgba(47, 79, 79, 0.308);
+  border-radius: 5px;
+  position: relative;
+  margin: 0 2px;
+}
+
 .current-conditions::first-letter, #current-conditions-element::first-letter{
   text-transform: uppercase;
 }

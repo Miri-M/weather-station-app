@@ -58,18 +58,37 @@ let cityForm = document.querySelector("#city-search-form");
 let locationButton = document.querySelector("#location-button");
 let isDegreesCelsius=true;
 
+//Date time
+let dateTime = document.querySelector("#current-date-time");
+dateTime.innerHTML = currentDateTime;
+
+//Disable temperature unit conversion buttons until there is a value available to convert
+function conversionButtonVisible(){
+  convertFarenheitButton.removeAttribute('disabled');
+  convertCelsiusButton.removeAttribute('disabled');
+  //Update button style
+  convertFarenheitButton.classList.remove('inactive-convert-temperature-button');
+  convertCelsiusButton.classList.remove('inactive-convert-temperature-button');
+  convertFarenheitButton.classList.add('convert-temperature-button');
+  convertCelsiusButton.classList.add('convert-temperature-button');
+}
+
 //Retrieve current temperature
 function displayTemperature(response) {
   document.querySelector("#city-heading").innerHTML = response.data.name;
   let displayElement = document.querySelector("#current-temperature");
   let temperature = Math.round(response.data.main.temp);
   displayElement.innerHTML = temperature;
+  temperatureUnits = document.querySelector("#current-temperature-units");
   if (isDegreesCelsius){
-    celsiusConversion();
+    //celsiusConversion();
+    temperatureUnits.innerHTML = "°C";
   }
   else{
-    farenheitConversion();
+    //farenheitConversion();
+    temperatureUnits.innerHTML = "°F";
   }
+  conversionButtonVisible();
 }
 
 //Retrieve current conditions description
@@ -158,21 +177,23 @@ locationButton.addEventListener("click", currentCoordinates,currentCoordinatesFo
 
 //-------------------------------------------------------------------
 
-//DATE TIME
-let dateTime = document.querySelector("#current-date-time");
-dateTime.innerHTML = currentDateTime;
-
-//-------------------------------------------------------------------
-
 //CELSIUS & FARENHEIT
+var temperatureUnits = document.querySelector("#current-temperature-units");
+temperatureUnits = ""
+let convertFarenheitButton = document.querySelector("#convert-farenheit-button");
+let convertCelsiusButton = document.querySelector("#convert-celsius-button");
+//Temperature conversion buttons disabled as default behaviour
+convertFarenheitButton.disabled = true;
+convertCelsiusButton.disabled = true;
+
 function farenheitConversion(event) {
   if(event){
     event.preventDefault();
-  }debugger
+  }
   var currentTemperature = document.querySelector("#current-temperature");
-  temperatureElement = Number(currentTemperature.innerHTML);
+  let temperatureElement = Number(currentTemperature.innerHTML);
   let tempFarenheit = Math.round((temperatureElement * 9) / 5 + 32);
-  currentTemperature.innerHTML = tempFarenheit;
+  currentTemperature.innerHTML = Number(tempFarenheit);
   let temperatureUnits = document.querySelector("#current-temperature-units");
   temperatureUnits.innerHTML = "°F";
   isDegreesCelsius = false;
@@ -182,22 +203,16 @@ function farenheitConversion(event) {
 function celsiusConversion(event) {
   if(event){
     event.preventDefault();
-  }  debugger
+  }
   var currentTemperature = document.querySelector("#current-temperature");
-  temperatureElement = Number(currentTemperature.innerHTML);
+  let temperatureElement = Number(currentTemperature.innerHTML);
   let tempCelsius = Math.round(((temperatureElement - 32) * 5) / 9);
-  currentTemperature.innerHTML = tempCelsius;
+  currentTemperature.innerHTML = Number(tempCelsius);
   let temperatureUnits = document.querySelector("#current-temperature-units");
   temperatureUnits.innerHTML = "°C";
   isDegreesCelsius = true;
   return;
 }
-
-let convertFarenheitButton = document.querySelector(
-  "#convert-farenheit-button"
-);
-let convertCelsiusButton = document.querySelector("#convert-celsius-button");
-
 convertFarenheitButton.addEventListener("click", farenheitConversion);
 convertCelsiusButton.addEventListener("click", celsiusConversion);
 
